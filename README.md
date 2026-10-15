@@ -124,7 +124,7 @@ pip3.12 install -r requirements.txt
 Verify the installation:
 
 ```
-python3.12 main.py version
+python3.12 main.pyc version
 ```
 
 ---
@@ -198,19 +198,19 @@ Dates such as the following are invalid:
 Use:
 
 ```
-python3.12 main.py import <file_path>
+python3.12 main.pyc import <file_path>
 ```
 
 Example:
 
 ```
-python3.12 main.py import tests/test_data/test_file.csv
+python3.12 main.pyc import tests/test_data/test_file.csv
 ```
 
 Excel files are also supported:
 
 ```
-python3.12 main.py import input/retention.xlsx
+python3.12 main.pyc import input/retention.xlsx
 ```
 
 Import Result
@@ -285,7 +285,7 @@ If archiving fails after a successful import, the import remains successful and 
 Run retention processing manually using:
 
 ```
-python3.12 main.py run
+python3.12 main.pyc run
 ```
 
 The agent:
@@ -376,7 +376,7 @@ Therefore, a missed scheduled execution does not permanently skip a file.
 Display database and latest execution statistics using:
 
 ```
-python3.12 main.py stats
+python3.12 main.pyc stats
 ```
 
 Example:
@@ -431,7 +431,7 @@ Retention processing can be scheduled using Linux cron.
 Example:
 
 ```
-0 3 * * * /home/postgres/ret_venv/bin/python3.12 /home/postgres/parquet-retention-agent/main.py run >> /home/postgres/parquet-retention-agent/logs/cron.log 2>&1
+0 3 * * * /home/postgres/ret_venv/bin/python3.12 /home/postgres/parquet-retention-agent/main.pyc run >> /home/postgres/parquet-retention-agent/logs/cron.log 2>&1
 ```
 
 This means:
@@ -461,7 +461,7 @@ crontab -e
 Add:
 
 ```
-0 3 * * * /home/postgres/ret_venv/bin/python3.12 /home/postgres/parquet-retention-agent/main.py run >> /home/postgres/parquet-retention-agent/logs/cron.log 2>&1
+0 3 * * * /home/postgres/ret_venv/bin/python3.12 /home/postgres/parquet-retention-agent/main.pyc run >> /home/postgres/parquet-retention-agent/logs/cron.log 2>&1
 ```
 
 **View Cron Jobs**
@@ -531,11 +531,12 @@ A typical project structure is:
 ```
 parquet-retention-agent/
 |
-├── main.py
+├── main.pyc
 ├── README.md
 ├── requirements.txt
 |
 ├── config/
+|   └── config.ini
 |
 ├── data/
 |   └── retention_agent.db
@@ -545,10 +546,13 @@ parquet-retention-agent/
 ├── processed/
 |
 ├── src/
-|   ├── config.py
-|   ├── logger.py
-|   ├── lock.py
-|   ├── validator.py
+|   ├── config.pyc
+|   ├── constants.pyc
+|   ├── enums.pyc
+|   ├── logger.pyc
+|   ├── lock.pyc
+|   ├── statistics.pyc
+|   ├── validator.pyc
 |   |
 |   ├── database/
 |   ├── models/
@@ -556,8 +560,6 @@ parquet-retention-agent/
 |   ├── services/
 |   └── ...
 |
-└── tests/
-    └── test_data/
 ```
 
 Runtime directories such as data/, logs/, and processed/ should normally not be committed to source control.
@@ -575,7 +577,7 @@ Before deploying to a customer environment:
 5. Verify filesystem permissions.
 6. Import the customer's retention input file.
 7. Verify imported records using:
-   ``python3.12 main.py stats``
+   ``python3.12 main.pyc stats``
 8. Perform a controlled retention run.
 9. Configure the Linux cron job.
 10. Verify cron execution and logs.
@@ -599,7 +601,7 @@ another instance currently holds the application lock.
 Check running processes before taking further action:
 
 ```
-ps -ef | grep main.py
+ps -ef | grep main.pyc
 ```
 
 Do not manually remove the lock file while another instance is running.
@@ -663,10 +665,10 @@ retention_date
 
 | Command | Description |
 |---|---|
-| `python3.12 main.py version` | Display application version |
-| `python3.12 main.py import <file>` | Import CSV/Excel retention records |
-| `python3.12 main.py run` | Process eligible retention records |
-| `python3.12 main.py stats` | Display database and execution statistics |
+| `python3.12 main.pyc version` | Display application version |
+| `python3.12 main.pyc import <file>` | Import CSV/Excel retention records |
+| `python3.12 main.pyc run` | Process eligible retention records |
+| `python3.12 main.pyc stats` | Display database and execution statistics |
 ---
 
 ## Testing
